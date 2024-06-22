@@ -1,0 +1,29 @@
+public class helperclassCanclation {
+    public static void Eventcancelation(list <Event__c> el) {
+       	list<Event__c> dl = [select id from Event__c where id in :el ];
+        list<Event_Attendee__c> eal=[Select Attendee__r.Name,Email__c,Event__r.Name,start_date__c,Event__r.Status__c from Event_Attendee__c where Event__c=:el];
+        List<Messaging.Email> emailList = new List<Messaging.Email>();
+        for(Event_Attendee__c EventMail : eal){
+            Messaging.SingleEmailMessage emailmsg = new Messaging.SingleEmailMessage();
+            String[] ToAddress = new String[]{EventMail.Email__c};
+                emailmsg.setToAddresses(ToAddress);
+            String emailsub = 'An update on your Event' ;
+            emailmsg.SetSubject(emailsub);
+            String DisplayName = 'EpicEventz';
+            emailmsg.setSenderDisplayName(DisplayName);
+            String Content = 'Hi '  +EventMail.Attendee__r.Name+ '<br/><br/>'+
+                'I trust you are doing well,  <br/><br/> '+
+                'You have enrolled with us for this event '+ EventMail.Event__r.Name+ ' and due to unforseen circumstances <br/><br/> '+
+                'Your registered event has been '+ EventMail.Event__r.Status__c +'<br/><br/>'+
+                'on'+EventMail.start_date__c+'<br/><br/>'+ 
+                'We are extremely sorry for the inconvenience : ( . <br/><br/>'+
+                'Team EpicEventz';
+            emailmsg.setHtmlBody(Content);
+            emaillist.add(emailmsg);
+            
+        }
+        Messaging.sendEmail(emailList);
+        delete dl;
+        
+    }
+}
