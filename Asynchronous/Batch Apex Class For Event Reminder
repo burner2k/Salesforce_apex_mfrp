@@ -1,0 +1,36 @@
+public class BatchApexForReminder implements Database.Batchable<sObject> {
+    public final list<event__c> ids;
+    public  BatchApexForReminder (list<event__c> ids) {
+        this.ids = ids;
+    }
+    public Database.QueryLocator start(Database.BatchableContext bc) {
+        return Database.getQueryLocator('Select Attendee__r.Name,Attendee__r.Email__c,Event__r.Name,Event__r.Start__c from Event_Attendee__c where Event__c=:ids');
+    }
+    public void execute(Database.BatchableContext bc, List<Event_Attendee__c> scope) {
+        List<Messaging.Email> emailList = new List<Messaging.Email>();
+        for(Event_Attendee__c EventMail : scope){
+            Messaging.SingleEmailMessage emailmsg = new Messaging.SingleEmailMessage();
+            String[] ToAddress = new String[]{EventMail.Attendee__r.Email__c};
+                emailmsg.setToAddresses(ToAddress);
+            String emailsub = 'An update on your Event' ;
+            emailmsg.SetSubject(emailsub);
+            String DisplayName = 'EpicEventz';
+            emailmsg.setSenderDisplayName(DisplayName);
+            String Content = 'Dear '+EventMail.Attendee__r.Name+ '<br/><br/>'+
+                'I hope this message finds you in good spirits 🌟.  <br/><br/> '+
+                'As you know, you’ve enrolled with us for the upcoming event '+ EventMail.Event__r.Name+' scheduled for '+EventMail.Event__r.Start__c+'<br/><br/>'+
+                'which is just around the corner! 🎉  <br/><br/>'+
+                'Consider this a friendly reminder to mark your calendar and join us. We’re excited to have you participate and look forward to your presence. <br/><br/>'+
+                'Thank you for being a part of our community! <br/><br/>'+
+                'Warm regards,<br/><br/>'+
+                ' The EpicEventz Team';
+            emailmsg.setHtmlBody(Content);
+            emailList.add(emailmsg);
+        }
+        Messaging.sendEmail(emailList);
+    }
+    public void finish(Database.BatchableContext bc) {
+        AsyncApexJob job = [SELECT Id, Status FROM AsyncApexJob WHERE Id = :bc.getJobId()];
+        System.debug( job.Status);
+    }
+}
