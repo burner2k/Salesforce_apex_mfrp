@@ -1,0 +1,19 @@
+trigger Event_Trigger on Event__c (after update) {
+    List<Event__c> cancelledEvents = new List<Event__c>();
+    List<Event__c> LocationChange = new List<Event__c>();
+    for(Event__c e : Trigger.new) {
+        Event__c oldEvent = Trigger.oldMap.get(e.Id);
+        if(e.Status__c == 'Cancelled' && oldEvent.Status__c != 'Cancelled') {
+            cancelledEvents.add(e);
+        }
+        else if(e.Location__c != oldEvent.Location__c ) 
+            LocationChange.add(e);
+    }
+    
+    if(!cancelledEvents.isEmpty()) {
+        helperclassCanclation.Eventcancelation(cancelledEvents);
+    }
+    if(!LocationChange.isEmpty()) {
+        HelperclassLocation.LocationMethod(LocationChange);
+    }
+}
