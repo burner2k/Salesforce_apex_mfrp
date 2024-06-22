@@ -1,0 +1,7 @@
+public class SchedulableForRemainder implements Schedulable{
+    public void execute(SchedulableContext ctx) {
+        list<event__c> tomorrowEvent = [select id from event__c where Start__c=tomorrow];
+        BatchApexForReminder batch = new BatchApexForReminder(tomorrowEvent);
+        Id batchId =Database.executebatch(batch);
+    }
+}
