@@ -1,0 +1,26 @@
+@isTest
+public class TestEventTriggerLocationChange {
+    @isTest 
+    static void testEventLocationChange() {
+        //create locations
+        Location__c testloc1 = new Location__c(Name = 'ecr',Postal_Code__c = '600045');
+        insert testloc1;
+        Location__c testloc2 = new Location__c(Name = 'omr', postal_Code__c = '600089');
+        insert testloc2;
+        
+        
+        Event__c testEvent = new Event__c(Name = 'test event',
+                                          Start__c = Date.today() - 1,
+                                          End__c = Date.today().addDays(2),
+                                          Max_Seats__c = 200,
+                                          Location__c = testloc1.id);
+        insert testEvent;
+        // Test for Location change
+        Test.startTest();
+        testEvent.Location__c = testloc2.id;
+        update testEvent;
+        System.assertEquals(1, Limits.getEmailInvocations());
+        Test.stopTest();
+        
+    }
+}
