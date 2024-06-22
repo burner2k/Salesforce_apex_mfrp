@@ -1,0 +1,2 @@
+System.schedule('SampleBatchScheduler', '0 30 15 * * ? *', new SchedulableForRemainder());
+// this code schedules the job on 3 30 pm that day
