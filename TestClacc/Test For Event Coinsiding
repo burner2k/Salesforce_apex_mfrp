@@ -1,0 +1,64 @@
+@isTest
+public class TestEventAttendeeTrigger {
+    @isTest
+    static void CreatingTestData() {
+        Attendee__c testAttendee = new Attendee__c
+            (
+            Name = 'test',
+            Phone__c = '7655567543',
+            Email__c= 'vishva@yahooo.com'
+        	);
+        insert testAttendee;
+       // System.debug('attendee is inserted');
+        list<Event__c> el = new list<Event__c> ();
+        
+        Event__c testEvent1= new Event__c(
+            Name = 'test event',
+            Start__c = Date.today() - 1,
+            End__c = Date.today().addDays(2),
+            Max_Seats__c = 200
+        );
+        
+        el.add(testEvent1);
+        
+        Event__c testEvent2= new Event__c(
+            Name = 'test event',
+            Start__c = Date.today() - 1,
+            End__c = Date.today().addDays(3),
+            Max_Seats__c = 200
+        );
+        
+        el.add(testEvent2);
+        
+		Event__c testEvent3= new Event__c(
+            Name = 'test event',
+            Start__c = Date.today() - 5,
+            End__c = Date.today(),
+            Max_Seats__c = 200
+        );
+        
+        el.add(testEvent3);
+        
+        insert el;
+		//System.debug('events is inserted');
+     
+        Event_Attendee__c event_reg1 = new Event_Attendee__c(Attendee__c = testAttendee.Id, Event__c = testEvent1.id);
+        insert event_reg1;
+		System.debug('reg1 is inserted');
+        Event_Attendee__c event_reg2 = new Event_Attendee__c(Attendee__c = testAttendee.Id, Event__c = testEvent2.id);
+		Event_Attendee__c event_reg3 = new Event_Attendee__c(Attendee__c = testAttendee.Id, Event__c = testEvent3.id);
+        
+        Test.startTest();
+        Database.SaveResult sr = Database.insert(event_reg2, false);
+        Database.SaveResult sr1 = Database.insert(event_reg3, false);
+        Test.stopTest();
+
+        // Check if the error message is correct
+        System.assert(!sr.isSuccess());
+        System.assertEquals('The event you want to register coincides with another event you have registered for.', sr.getErrors()[0].getMessage());
+        
+        System.assert(!sr1.isSuccess());
+        System.assertEquals('The event you want to register coincides with another event you have registered for.', sr1.getErrors()[0].getMessage());
+        
+    }
+}
