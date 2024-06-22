@@ -1,0 +1,34 @@
+@isTest
+public class TestEventTriggerStatusChange {
+    @isTest 
+    static void testEventStatusChange() {
+        
+        Attendee__c testAttendee = new Attendee__c
+            (
+                Name = 'test',
+                Phone__c = '7655567543',
+                Email__c ='vishva@yahooo.com'
+            );
+        
+        insert testAttendee;
+        
+        Event__c testEvent = new Event__c(Name = 'test event',
+                                          Start__c = Date.today() - 1,
+                                          End__c = Date.today().addDays(2),
+                                          Max_Seats__c = 200);
+        insert testEvent;
+        
+		Event_Attendee__c testEventAttendee = new Event_Attendee__c(Event__c = testEvent.Id, Attendee__c = testAttendee.id);
+        
+        insert testEventAttendee;
+        // Test for Status change to 'Cancelled'
+        Test.startTest();
+        testEvent.Status__c = 'Cancelled';
+        update testEvent;
+        System.assertEquals(1 ,Limits.getEmailInvocations());
+        Test.stopTest();
+        
+        // Verify that the email was sent
+       // System.assertEquals(1 ,Limits.getEmailInvocations());
+    }
+}
