@@ -1,0 +1,25 @@
+public class HelperclassLocation {
+    public static void LocationMethod (list<Event__C> li) {
+        list<Event_Attendee__c> eal=[Select Attendee__r.Name,Email__c,Event__r.Name,Event__r.Start__c, Event__r.Location__r.Name, start_date__c from Event_Attendee__c where Event__c=:li];
+        List<Messaging.Email> emailList = new List<Messaging.Email>();
+        for(Event_Attendee__c EventMail : eal){
+            Messaging.SingleEmailMessage emailmsg = new Messaging.SingleEmailMessage();
+            String[] ToAddress = new String[]{EventMail.Email__c};
+            emailmsg.setToAddresses(ToAddress);
+            String emailsub = 'An update on your Event' ;
+            emailmsg.SetSubject(emailsub);
+            String DisplayName = 'EpicEventz';
+            emailmsg.setSenderDisplayName(DisplayName);
+            String Content = 'Hi '+EventMail.Attendee__r.Name+ '<br/><br/>'+
+                'I trust you are doing well,  <br/><br/> '+
+                'You have enrolled with us for this event '+ EventMail.Event__r.Name+ ' and due to unforseen circumstances <br/><br/> '+
+                'the location for your regiestered event has changed to' + EventMail.Event__r.Location__r.Name + '<br/><br/>'+
+                'Your event will start asusal on '+EventMail.start_date__c+'<br/><br/>'+ 
+                'We are extremely sorry for the inconvenience. <br/><br/>'+
+                'Team EpicEventz';
+            emailmsg.setHtmlBody(Content);
+            emailList.add(emailmsg);
+        }
+        Messaging.sendEmail(emailList);
+    }
+}
