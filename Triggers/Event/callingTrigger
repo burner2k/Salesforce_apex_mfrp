@@ -1,0 +1,3 @@
+trigger Event_Attendee_Trigger on Event_Attendee__c (before insert) {
+    helperClassCoincide.coincide(Trigger.new);
+}
