@@ -1,0 +1,29 @@
+public class helperClassCoincide {
+    public static void coincide(list<Event_Attendee__c> EA ){
+        Set<Id> attendeeIds = new Set<Id>();
+        for (Event_Attendee__c attendee : EA) {
+            attendeeIds.add(attendee.Attendee__c);
+        }
+        
+        Map<Id, List<Event_Attendee__c>> existingAttendeesMap = new Map<Id, List<Event_Attendee__c>>();
+        for (Event_Attendee__c attendee : [SELECT Attendee__c, Event__c, end_date__c, start_date__c FROM Event_Attendee__c WHERE Attendee__c IN :attendeeIds]) {
+            if (!existingAttendeesMap.containsKey(attendee.Attendee__c)) {
+                existingAttendeesMap.put(attendee.Attendee__c, new List<Event_Attendee__c>());
+            }
+            existingAttendeesMap.get(attendee.Attendee__c).add(attendee);
+        }
+        
+        for (Event_Attendee__c newAttendee : EA) {
+            List<Event_Attendee__c> existingAttendees = existingAttendeesMap.get(newAttendee.Attendee__c);
+            if (existingAttendees != null) {
+                for (Event_Attendee__c existingAttendee : existingAttendees) {
+                    if ((newAttendee.start_date__c >= existingAttendee.start_date__c && newAttendee.start_date__c <= existingAttendee.end_date__c) ||
+                        (newAttendee.end_date__c >= existingAttendee.start_date__c && newAttendee.end_date__c <= existingAttendee.end_date__c)) {
+                            newAttendee.addError('The event you want to register coincides with another event you have registered for.');
+                            break;
+                        }
+                }
+            }
+        }
+    } 
+}
