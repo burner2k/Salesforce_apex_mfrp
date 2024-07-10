@@ -1,0 +1,11 @@
+import { LightningElement,wire } from 'lwc';
+import ongoingEvents from '@salesforce/apex/ongoingEventHelperClass.ongoingEvents';
+export default class OngoingEvents extends LightningElement {
+columns = [
+    { label: 'Name', fieldName: 'Name' },
+    { label: 'Event Type', fieldName: 'Event_Type__c',type:'Picklist' },
+    { label: 'Remaining Seats', fieldName: 'Remaining_Seats__c',type:'Number' }
+];
+ @wire(ongoingEvents)
+Events
+}
