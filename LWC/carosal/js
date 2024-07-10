@@ -1,0 +1,9 @@
+import { LightningElement } from 'lwc';
+import carousel_image from "@salesforce/resourceUrl/carousel_pic";
+export default class CarouselComponent extends LightningElement {
+CharityRun=`${carousel_image}/carousel/images/CharityRun.jpg`;
+ProgrammersWeek=`${carousel_image}/carousel/images/ProgrammersWeek.jpg`;
+AndhraFoodFestival=`${carousel_image}/carousel/images/AndhraFoodFestival.jpg`;
+HoliParty=`${carousel_image}/carousel/images/Holi.jpg`;
+UltimateGameShow=`${carousel_image}/carousel/images/UltimateGameShow.jpg`;
+}
