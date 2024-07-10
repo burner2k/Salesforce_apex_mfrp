@@ -1,0 +1,7 @@
+<template>
+    <div class="slds-box slds-theme_default"> 
+    <div class="marquee">
+        <p style="font-family:fantasy">Welcome to Epic Eventz!!!</p>
+    </div>
+    </div>
+</template>
