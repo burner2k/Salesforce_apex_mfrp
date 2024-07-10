@@ -1,0 +1,21 @@
+@isTest
+public class TestMethodForInvocablefeedack {
+@istest
+    static void testMethodForInvocable(){
+         Attendee__c testAttendee = new Attendee__c( Name = 'test', Phone__c = '7655567543', Email__c ='vishva@yahooo.com' );
+        insert testAttendee;
+        Event__c testEvent = new Event__c(Name = 'test event',Start__c = Date.today() - 3,End__c = Date.today().addDays(2),Max_Seats__c = 200);
+        insert testEvent;
+		Event_Attendee__c testEventAttendee = new Event_Attendee__c(Event__c = testEvent.Id, Attendee__c = testAttendee.id);
+        insert testEventAttendee;
+        testEvent.End__c = Date.today() - 1;
+        update testEvent;
+        Test.startTest();
+        testEvent.Start__c = Date.today() - 1 ;
+        update testEvent;
+        list<id> testInvoke =new list<id>();
+        testInvoke.add(testEvent.id);
+        System.assertEquals(1 ,Limits.getEmailInvocations());
+        Test.stopTest();
+    }
+}
