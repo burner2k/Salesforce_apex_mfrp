@@ -1,0 +1,17 @@
+import { LightningElement } from 'lwc';
+import Event_Classification from "@salesforce/resourceUrl/Events"
+// import static resource name from @salesforce
+export default class HoverOver extends LightningElement {    
+ImageHandler
+calledOnce = false
+    renderedCallback(){
+        if(!this.calledOnce){ //let this hook run only once
+            this.calledOnce = true
+            this.template.querySelectorAll("lightning-button").forEach((btnelle)=>{
+                btnelle.addEventListener("mouseover",(event)=>{
+                    this.ImageHandler = `${Event_Classification}/Events/${event.target.label}.jpg`
+                })
+            })
+        }
+    }
+}
