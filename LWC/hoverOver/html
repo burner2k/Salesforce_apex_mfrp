@@ -1,0 +1,17 @@
+<template>
+<lightning-card title="Displaying Event Classification Over The Hover">
+    <div class="sldx-var-m_medium slds-align_absolute-center ">
+        <lightning-button-group>
+            <lightning-button label="Sports"></lightning-button>
+            <lightning-button label="Technical"></lightning-button>
+            <lightning-button label="FoodFest"></lightning-button>
+            <lightning-button label="Festival"></lightning-button>
+            <lightning-button label="TeamBuilding"></lightning-button>
+        </lightning-button-group>
+    </div>
+ 
+    <div class="slds-var-m-around_small slds-align_absolute-center">
+        <img src ={ImageHandler} class="imgClass"/>
+    </div>
+</lightning-card>
+</template>
