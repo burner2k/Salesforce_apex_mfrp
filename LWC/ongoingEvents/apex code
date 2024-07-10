@@ -1,0 +1,7 @@
+public class ongoingEventHelperClass {
+    @auraEnabled(Cacheable=true)
+    public static List<Event__c> ongoingEvents(){
+        return [Select Id,Name,Remaining_Seats__c,Event_Type__c From Event__c Where live__c=true];
+    }
+ 
+}
