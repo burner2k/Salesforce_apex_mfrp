@@ -1,0 +1,43 @@
+<template> 
+<lightning-card title="Events Happening">
+    <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around_x-small">
+        <lightning-carousel> 
+            <lightning-carousel-image 
+                src = {CharityRun} 
+                header = "Charity Run" 
+                description = "Race for a Cause, Pace for a Pause! Join our Charity Run!" 
+                alttext = "Event Classification" 
+                href = "javascript:void(0);"> 
+            </lightning-carousel-image> 
+            <lightning-carousel-image 
+                src = {ProgrammersWeek} 
+                header = "Programmers Week" 
+                description = "Code, Connect, Create: Celebrate Programmers’ Week with us!" 
+                alttext = "Event Classification" 
+                href = "javascript:void(0);"> 
+            </lightning-carousel-image> 
+            <lightning-carousel-image 
+                src = {AndhraFoodFestival} 
+                header = "Andhra Food Festival" 
+                description = "Taste the Spice of Life at our Andhra Food Festival!" 
+                alternative-text = "Event Classification" 
+                href = "javascript:void(0);"> 
+            </lightning-carousel-image> 
+                <lightning-carousel-image 
+                src = {HoliParty} 
+                header = "Holi Party" 
+                description = "A vibrant celebration of colors, laughter, and joy, where friends and family come together to paint the town in hues of happiness" 
+                alternative-text = "Event Classification" 
+                href = "javascript:void(0);"> 
+            </lightning-carousel-image> 
+                <lightning-carousel-image 
+                src = {UltimateGameShow} 
+                header = "Ultimate Game Show" 
+                description = "Game On! Unleash your skills at the Ultimate Technical Game Show!" 
+                alternative-text = "Event Classification" 
+                href = "javascript:void(0);"> 
+            </lightning-carousel-image> 
+        </lightning-carousel> 
+    </div> 
+</lightning-card>
+</template>
