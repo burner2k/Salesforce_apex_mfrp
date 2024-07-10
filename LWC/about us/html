@@ -1,0 +1,14 @@
+<template>
+    <div class="container">
+        <div class="image-container">
+            <img src={ImageHandler} alt="Description of the image">
+        </div>
+        <div class="text-container">
+            <h1>About Us</h1>
+            <p>EpicEventz.com is a renowned Event Management company, committed to delivering superior services and support to businesses all over the world. We are solely focused on event management and related services, tailoring our offerings to meet the diverse needs of our clients..</p>
+            <hr>
+            <p>At EpicEventz.com, Our expertise lies in organizing and managing events, and we pride ourselves on our commitment to excellence in this field. Our team of seasoned professionals uses their industry knowledge to provide customized event solutions that help organizations succeed. At EpicEventz.com, we are your trusted partner in creating memorable events.</p>
+          <p>ContactUs - epiceventz@gmail.com</p>
+        </div>
+    </div>
+</template>
